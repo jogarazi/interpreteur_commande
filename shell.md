@@ -1,9 +1,12 @@
-Très et trop brève introduction à UNIX, à l'interpréteur de commandes
+Interface système ou Shell
 =====================================================================
 
-Ce document introductif sera utilisé dans le cadre de l'initiation
-à UNIX et à l'interpréteur de commandes décrite dans
-[shell.md](shell.md).
+L'interface système (_shell_ en anglais) est un programme permettant à l'utilisateur d'interagir avec le système
+d'exploitation. C'est une forme simple d'interface utilisateur.
+_Shell_ (pour coquille en anglais) est le terme anglais pour désigner l'interface avec le système d'exploitation (OS, _Operating System_).
+Les OS basés sur Unix disposent de deux types d'interface avec le système :
+- une *interface graphique* (GUI pour _Graphical User Interface_)
+- et des *interfaces en ligne de commande* (CLI pour _Command Line Interface_)
 
 Utilisateur
 -----------
