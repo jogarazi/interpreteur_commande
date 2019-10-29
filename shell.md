@@ -34,7 +34,7 @@ Un utilisateur s'identifie auprès du système par une procédure de
 _login_ après quoi il se retrouve dans un environnement graphique ou
 un interpréteur de commandes. 
 
-Après avoir lancé l'emulateur de terminal présent sur 
+Après avoir lancé l'émulateur de terminal présent sur 
 votre bureau, vous devriez obtenir :
 
 ```console
@@ -55,7 +55,7 @@ nom [option]... [argument]...
 ```
 
 le premier mot est le nom de la commande, les _options_ sont de la forme `-l`,
-`-a`, ou `-la`, parfois de la forme `--color`. On écrit par exemple pour la
+`-a`, ou `-la`,... On écrit par exemple pour la
 commande `ls` (qui liste les entrées du système de fichiers) : 
 
 (les résultats des commandes ne sont pas affichées.)
@@ -65,7 +65,6 @@ commande `ls` (qui liste les entrées du système de fichiers) :
 % ls -a
 % ls -a -l
 % ls -la
-% ls -a --color 
 ```
 
 Les arguments désignent les entités, par exemple les fichiers ou utilisateurs, qui
@@ -116,58 +115,24 @@ On effectue une recherche dans une page de manuel avec la commande
 `/motif` (motif étant par exemple le mot recherché). On passe
 à l'occurrence suivante du motif en appuyant sur `n`.
 
-Fichier UNIX
-------------
 
-Un **fichier** permet de stocker les données de manière
-permanente, par exemple sur un disque dur.
 
-Les fichiers UNIX sont organisés de manière hiérarchisée sous la forme d'une
-arborescence de répertoires.
-
-Un fichier 
-
-* contient une séquence d'octets/caractères,
-* sans autre précision.
-
-Des conventions, normes, ou usages précisent le format du contenu du
-fichier (format du fichier).
-
-On distingue généralement les fichiers qui sont des
-
-* programmes exécutables
-* shell-scripts
-* fichiers sources, par exemple Python, C, ou Java
-* textes
-
-mais aussi les
-
-* répertoires (ou dossiers, _directory_ en anglais)
-* liens (symboliques)
-* périphériques (clavier, écran, etc. sous `/dev/*`)
-* etc.
 
 Arborescence de répertoires
 ---------------------------
-
-Les fichiers sont organisés dans une unique **arborescence de répertoires** :
+L'ordinateur stocke sur son disque dur des **fichiers**, contenant des données. Il peuvent être lus, 
+modifiés, renommés, copiés ou supprimés. Ces fichiers sont organisés dans une unique **arborescence de répertoires** :
 
 * chaque fichier est dans un répertoire
 * il existe un répertoire _racine_  noté `/`
 * chaque répertoire a un répertoire père unique
 
-L'arborescence présentée ci-dessous a été obtenue avec la commande
-`tree`. Elle montre les deux premiers niveaux de
-répertoire.
+Voici un exemple d'extrait d'arborescence :
 
 ```
 /
-├── bin
-├── etc
-│   ├── apache2
-│   ├── firefox-esr
-│   ├── iproute2
-│   ├── X11
+├── bin                 _contient les commandes de bases_
+├── etc			_contient les fichiers de configuration système_
 ├── home
 │   └── petery
 ├── lib
