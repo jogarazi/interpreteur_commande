@@ -61,10 +61,10 @@ commande `ls` (qui liste les entrées du système de fichiers) :
 (les résultats des commandes ne sont pas affichées.)
 
 ```console
-% ls
-% ls -a
-% ls -a -l
-% ls -la
+alice@a12p24:~$ ls
+alice@a12p24:~$ ls -a
+alice@a12p24:~$ ls -a -l
+alice@a12p24:~$ ls -la
 ```
 
 Les arguments désignent les entités, par exemple les fichiers ou utilisateurs, qui
@@ -72,7 +72,7 @@ seront traités par la commande. On demandera ainsi de lister le
 contenu du répertoire de nom `etc` par :
 
 ```console
-% ls -l etc
+alice@a12p24:~$ ls -l etc
 ```
 
 Les options et arguments forment ce que l'on appelle parfois les
@@ -85,7 +85,7 @@ Les commandes sont documentées dans le **manuel en ligne** auquel la commande
 `man` permet d'accéder : 
 
 ```console
-% man ls 
+alice@a12p24:~$ man ls 
 LS(1)                                      User Commands                                      LS(1)
 
 NAME
@@ -131,28 +131,18 @@ Voici un exemple d'extrait d'arborescence :
 
 ```
 /
-├── bin                 `contient les commandes de bases
-├── etc			contient les fichiers de configuration système
+├── bin                 
+├── etc			
 ├── home
-│   └── petery
-├── lib
-│   ├── firmware
-│   ├── modules
-├── media
-│   ├── cdrom
-│   └── petery
-├── mnt
-├── opt
-├── proc
-├── root
-├── run
-├── tmp
-├── usr
-│   ├── bin
-│   ├── lib
-└── var
-	├── log
-	├── mail
+│   └── alice
+	   ├── Documents
+	   │      ├── cours.odt
+           │      └── diapos.pdf
+	   │
+	   ├── Photos
+	         ├── img_001.jpg
+                 └── img_002.jpg
+
 ```
 
 L'organisation globale du système de fichier suit un standard,
@@ -162,16 +152,57 @@ Par exemple, le répertoire `/bin` contient les commandes de base alors
 que le répertoire `/etc` contient les fichiers de configuration du
 système, et le répertoire `/home` les répertoires des utilisateurs. 
 
+Ici la racine `/` contient les répertoires `bin`, `etc`, `home`, `tmp` et possiblement d'autres non affichés. Le répertoire `Documents`est un _sous-repertoire_ du répertoire `alice`, ce dernier se situant lui-même dans le sous-repertoire `home` de la racine.
+
 Répertoire de travail
 ---------------------
 
 Toute commande ou programme s'exécute dans un répertoire donné, dit le
 _répertoire courant_ ou _répertoire de travail_ que l'on peut voir
 comme celui dans lequel on est "positionné". \
-Lorsque l'on se connecte au système, on est placé dans répertoire
-personnel, par exemple `/home/diueil/duchmlol`. \
+Lorsque l'on se connecte au système, on est placé dans le répertoire
+personnel, par exemple `/home/alice`. \
 Des commandes du système permettent de changer de répertoire courant,
-de se déplacer dans la hiérarchie du système de fichiers.
+de se déplacer dans la hiérarchie du système de fichiers :
+
+La commande `pwd` affiche le répertoire de travail :
+
+```console
+~$ pwd
+/home/alice
+```
+
+La commande `cd` permet de changer de répertoire de travail :
+
+```console 
+~$ pwd
+/home/alice
+~$ cd Documents 
+~$ pwd
+/home/alice/Documents
+```
+
+La commande `mkdir` permet de créer un nouveau répertoire :
+
+```console
+ ls
+doc  tmp
+% mkdir foo
+% ls
+doc  foo  tmp
+```
+
+La commande `rmdir` permet de supprimer un répertoire, il doit être
+vide :
+
+```console
+% rmdir foo
+% ls 
+doc  tmp
+```
+
+
+
 
 Chemin d'accès à un fichier
 ---------------------------
@@ -230,66 +261,7 @@ En supposant
 
 on pourra écrire `../doc` pour désigner ce répertoire.
 
-Syntaxe d'un nom de fichier
----------------------------
 
-Le **nom de fichier** correspond au nom du fichier dans le répertoire
-auquel il appartient. Ce nom
-
-* est une suite de caractères (sauf le `/`)
-* de longueur limitée (255, ou 1024 caractères selon la configuration
-  du système)
-
-On évite en général l'usage du caractère espace et des lettres
-accentuées.
-
-UNIX fait une différence entre les lettres en capitales et en
-minuscules. Ainsi, `toto` et `Toto` désignent deux fichiers
-différents.
-
-Le système n'impose pas de contraintes, mais on utilise des extensions
-ou suffixes conventionnels. Par exemple `.c` et `.h` pour les fichiers
-sources C, `.java` et `.class` pour Java, `.py` pour Python, `.html`
-ou  `htm` pour des fichiers au format HTML,  `.jpeg` ou `. jpg` pour
-des fichiers contenant des images au format JPEG,  `.md` ou
-`.markdown`  pour des fichiers textes au format Markdown, `.tex` au
-format LaTeX, etc. 
-
-L'absence de suffixe est généralement réservée aux fichiers
-exécutables et aux répertoires.
-
-Les fichiers dont le nom commence par le caractère `.` sont considérés
-comme des fichiers "cachés". Par défaut ils ne sont pas affichés quand
-on liste le contenu d'un répertoire.
-
-Méta-caractères
----------------
-
-Le shell réalise la substitution de **méta-caractères**. Il s'agit
-principalement de `*` et `?`. Un mot qui comporte ces méta-caractères
-est un motif, on parle aussi d'expression régulière. Un tel motif
-correspond à un ensemble de mots possibles. Ce motif sera remplacé par
-le shell par l'ensemble des noms de fichiers qui correspondent,
-sachant que 
-
-* le caractère `?` correspond à un caractère quelconque
-  (y compris le `.`)
-* le caractère `*`correspond à une suite quelconque de caractères
-  (éventuellement vide)
-
-Ainsi, si existe les fichiers `test`, `time`, `touch`, `trace`,
-`troff`, `true`, et `tsort`,
-
-* le motif `t*` sera remplacé par l'ensemble des noms de fichiers,
-* le motif `*s*` par `test`, et `tsort`,
-* le motif `tr???` par les seuls `trace` et `troff`
-* le motif `*z*` par rien (et el shell avertira d'une erreur) 
-
-D'autres méta-caractères sont définis :
-
-* `[liste]` correspond à n'importe quel des caractères de _liste_
-* `[^liste]` correspond à n'importe quel des caractères sauf ceux de _liste_
-* `[lower-upper]` correspond à tout caractère compris entre _lower_ et _upper_
 
 Manipulation des répertoires
 ----------------------------
