@@ -131,8 +131,8 @@ Voici un exemple d'extrait d'arborescence :
 
 ```
 /
-├── bin                 _contient les commandes de bases_
-├── etc			_contient les fichiers de configuration système_
+├── bin                 `contient les commandes de bases
+├── etc			contient les fichiers de configuration système
 ├── home
 │   └── petery
 ├── lib
