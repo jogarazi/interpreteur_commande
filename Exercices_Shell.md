@@ -79,8 +79,19 @@ EXERCICES
    * `rmdir TP_shell`
    
    
-
 ### Exercice 2
+On suppose que l'on se trouve dans un répertoire `TEST`, que ce dernier est vide et que l'on exécute les sept commandes suivantes :
+```console
+mkdir a b c d
+touch a/t.txt d/foo.txt
+cd c
+mkdir ../b/e f g
+cd ..
+cp */*.txt c/g
+rm -rf d
+```
+
+### Exercice 3
 1. Placez vous dans le répertoire `fichiers`.
 2. Utilisez la commande `id` pour visualiser votre identifiant
    d'utilisateur (uid), votre groupe principal (gid) ainsi que les
