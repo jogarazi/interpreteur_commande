@@ -90,32 +90,27 @@ cd ..
 cp */*.txt c/g
 rm -rf d
 ```
+Dessiner l'arborescence finale des fichiers et répertoires (on uilisera `TEST`comme racine de l'arborescence)
 
 ### Exercice 3
-1. Placez vous dans le répertoire `fichiers`.
-2. Utilisez la commande `id` pour visualiser votre identifiant
-   d'utilisateur (uid), votre groupe principal (gid) ainsi que les
-   groupes auxquels vous appartenez.
-3.  Créez un répertoire `prive` dans lequel vous créerez un fichier
-	nommé `prive` contenant votre nom de login et un répertoire `partage`.
-	+ Interdire l’accès au 	répertoire `prive` pour les membres du groupe et les autres.
-	+ Dans le répertoire `partage` créez un fichier `lecture` dans lequel
-	vous mettrez votre nom de login. Ce fichier devra être consultable
-	mais non modifiable par les membres de votre groupe principal et
-	non lisible/modifiable par les autres.
-	+ Dans le répertoire `partage` créez un fichier `ecriture` dans
-	lequel vous mettrez votre nom de login. Ce fichier devra être
-	consultable et modifiable par les membres de votre groupe
-	principal mais pas par les autres.
-4. Demander à votre voisin de tester vos droits en :
-   + Essayant de lire le contenu du fichier `prive`.
-   + Essayant de lire puis de modifier le contenu du fichier `lecture`.
-   + Ajoutant son nom de login à votre fichier `ecriture`
-5. Éditez un fichier nommé `salut` avec le contenu suivant :
+1.  Créez, dans votre répertoire personnel, les répertoires `NSI` et `NSI/TP_SHELL`.
+2.  Modifiez les permissions de telle sorte que :
+	+ Le répertoire personnel possède tous les droits pour l'utilisateur et uniquement le droit d'exécution pour le groupe 
+	et les autres.
+	+ Les répertoires `NSI` et `NSI/TP_SHELL` possèdent tous les droits pour l'utilisateur et les droits de lecture
+	et d'exécution pour le groupe et les autre (une commande par répertoire).
+3. Créer un fichier `lisible.txt` dans le répertoire `NSI/TP_SHELL` . Il devra posséder les droits de lecture/écriture pour l'utilisateur et uniquement les droits de lecture pour le groupe et les autres.
+4. Créer un fichier `secret.txt` dans le répertoire `NSI/TP_SHELL` . Il devra posséder les droits de lecture/écriture pour l'utilisateur et aucun droit pour le groupe et pour les autres.
+5. Demander à votre voisin de tester ses droits en 
+	+ essayant de lire le contenu du fichier `secret.txt`
+	+ essayant de lire puis de modifier le contenu du fichier `lisible.txt`.
+6. Éditez un fichier nommé `salut` avec le contenu suivant :
    ```
    echo Hello World
    ```
    Tentez de l'exécuter en tapant `./salut`. Modifiez les droits de manière à ce que vous puissiez l'exécuter
    puis vérifiez que vous pouvez l'exécuter.
+
+
    
 
