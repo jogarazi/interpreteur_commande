@@ -372,6 +372,36 @@ bash: cd: /home/alice/: Permission non accordée
 
 
 
+Méta-caractères
+---------------
+
+Le shell réalise la substitution de **méta-caractères**. Il s'agit
+principalement de `*` et `?`. Un mot qui comporte ces méta-caractères
+est un motif, on parle aussi d'expression régulière. Un tel motif
+correspond à un ensemble de mots possibles. Ce motif sera remplacé par
+le shell par l'ensemble des noms de fichiers qui correspondent,
+sachant que 
+
+* le caractère `?` correspond à un caractère quelconque
+  (y compris le `.`)
+* le caractère `*`correspond à une suite quelconque de caractères
+  (éventuellement vide)
+
+Ainsi, si existe les fichiers `test`, `time`, `touch`, `trace`,
+`troff`, `true`, et `tsort`,
+
+* le motif `t*` sera remplacé par l'ensemble des noms de fichiers,
+* le motif `*s*` par `test`, et `tsort`,
+* le motif `tr???` par les seuls `trace` et `troff`
+* le motif `*z*` par rien (et el shell avertira d'une erreur) 
+
+D'autres méta-caractères sont définis :
+
+* `[liste]` correspond à n'importe quel des caractères de _liste_
+* `[^liste]` correspond à n'importe quel des caractères sauf ceux de _liste_
+* `[lower-upper]` correspond à tout caractère compris entre _lower_ et _upper_
+
+
 
 
 Pour complèter ce cours, vous trouverez une référence
