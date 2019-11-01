@@ -87,18 +87,15 @@ EXERCICES
    groupes auxquels vous appartenez.
 3.  Créez un répertoire `prive` dans lequel vous créerez un fichier
 	nommé `prive` contenant votre nom de login et un répertoire `partage`.
-	+ En utilisant la **forme symbolique**, interdire l’accès au
-	répertoire `prive` pour les membres du groupe et les autres.
+	+ Interdire l’accès au 	répertoire `prive` pour les membres du groupe et les autres.
 	+ Dans le répertoire `partage` créez un fichier `lecture` dans lequel
 	vous mettrez votre nom de login. Ce fichier devra être consultable
 	mais non modifiable par les membres de votre groupe principal et
-	non lisible/modifiable par les autres. Modifiez les droits en
-	utilisant la **forme numérique**.
+	non lisible/modifiable par les autres.
 	+ Dans le répertoire `partage` créez un fichier `ecriture` dans
 	lequel vous mettrez votre nom de login. Ce fichier devra être
 	consultable et modifiable par les membres de votre groupe
-	principal mais pas par les autres. Modifiez les droits en
-	utilisant la **forme numérique**.
+	principal mais pas par les autres.
 4. Demander à votre voisin de tester vos droits en :
    + Essayant de lire le contenu du fichier `prive`.
    + Essayant de lire puis de modifier le contenu du fichier `lecture`.
@@ -107,8 +104,7 @@ EXERCICES
    ```
    echo Hello World
    ```
-   Tentez de l'exécuter en tapant `./salut`. Modifiez les droits sous
-   **forme symbolique** de manière à ce que vous puissiez l'exécuter
+   Tentez de l'exécuter en tapant `./salut`. Modifiez les droits de manière à ce que vous puissiez l'exécuter
    puis vérifiez que vous pouvez l'exécuter.
    
 
