@@ -303,8 +303,10 @@ dont tous les membres peuvent le lire mais ni le modifier ni l'exécuter (`r--`)
 La commande `chmod` permet de modifier les permissions sur le fichier, avec la syntaxe :
 
 ```console
-~$ chmod $c_1m_1$
+~$ chmod $$c_1m_1$$
 ```
+$$c_1m_1$$
+
 
 Caractéristiques d'un fichier
 -----------------------------
