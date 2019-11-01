@@ -422,6 +422,8 @@ Voyez également la carte de référence Unix de Moïse Valvassori
 
 EXERCICES
 ---------
+---------
+
 ## EXERCICE 1
 
 1. Utilisez la commande `ls` pour lister l'ensemble des fichiers présents dans le 
