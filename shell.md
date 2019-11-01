@@ -300,85 +300,81 @@ dont tous les membres peuvent le lire mais ni le modifier ni l'exécuter (`r--`)
 
 
 ### Modifications des permissions
+
 La commande `chmod` permet de modifier les permissions sur le fichier, avec la syntaxe :
 
 ```console
-~$ chmod $$c_1m_1$$
+~$ chmod c_1m_1p_1,...,c_nm_np_n chemin
 ```
-$$c_1m_1$$
+où 
+- les `c_i` sont des cibles qui peuvent valoir `u` (pour le propriétaire), `g` (pour le groupe), `o` (pour les autres) et `a` pour tous (c'est à dire les trois catégories).
+- les `m_i` sont des modifications (`+`pour dire ajouter, `-`pour dire retirer)
+- les `p_i` sont des symboles de permissions (`r`, `w` ou `x`).
 
-
-Caractéristiques d'un fichier
------------------------------
-
-Un fichier est caractérisé par :
-
-* un propriétaire : un des utilisateurs du système,
-  par exemple `alice`
-* un groupe propriétaire, un des groupes du système, 
-  par exemple `nsi`
-* des dates (de création, de dernière modification, etc.)
-* des droits d'accès
-  - en lecture, écriture, exécution
-  - pour le propriétaire, pour les membres du groupe propriétaire,
-    pour les autres 
-* un type : fichier, répertoire, lien, etc
-* etc.
-
-La commande `ls` permet d'afficher certaines des caractéristiques :
+Par exemple la commande ci-dessous rajoute les droits en écriture à toutes les personnes du groupe et supprime les droits en lecture des autres.
 
 ```console
-% ls -l /boot/vmlinuz
--rw------- 1 root root 8298232 Apr  3 10:07 /boot/vmlinuz
+~$ chmod g+w,o-r Photos/img_001.jpg
+~$ ls -l Photos
+total 2672
+-rw-rw---- 1 alice nsi 1431099 oct. 31 7:55 img_001.jpg
+-rw-r--r-- 1 alice nsi 1300458 oct. 31 7:56 img_002.jpg
 ```
-On y lit (en gras les principaux champs)
+Pour illustrer les droits en exécution, on peut faire le test suivant :
 
-* premier champ **type** du fichier et **droits** (voir ci-dessous)
-* deuxième champ, un entier, le nombre de liens (physiques) vers le fichier
-* troisième champ **propriétaire**, le nom du propriétaire du fichier 
-* quatrième champ, le nom du groupe propriétaire du fichier 
-* cinquième champ **taille**, la taille en octets (caractères) du
-  fichier (une version plus lisible est possible avec l'option `-h` de
-  la commande `ls`)
-* champs suivants **date**, date de modification du fichier (mois,
-  quantième, heure ou année)
-* dernier champ **nom du fichier**
+```console
+~$ ls -l /bin/ls
+-rwxr-xr-x root root 88248 janv. 14 2019 /bin/mkdir
+```
+
+On demande ici les informations détaillées sur un fichier `mkdir`se situant dans le répertoire `bin`. Ce fichier correspond justement à l'exécutable de la commande `mkdir` que nous avons exécuter précédemment. On peut voir que ce fichier appartient à `root` (et à son groupe), c'est à dire que c'est un fichier système. Seul le super-utilisateur peut modifier ce fichier (ce qui est une opération risquée mais qui peut se produire lorsque le système est mis à jour) mais tous les autres utilisateurs pourront le lire et l'exécuter. Ainsi, toute personne peut exécuter la commande `mkdir`pour créer des répertoires.
+
+En ce qui concerne les **répertoires**, les trois de types de permissions existent mais ont un sens propre :
+- le droit en lecture sur un répertoire signifie que son _contenu_ peut être listé
+- le droit en écriture signifie que l'on peut modifier des _entrées_ du répertoire c'est à dire créer des fichiers, les supprimer ou les renommer. En particulier, il n'est pas nécessaire d'avoir les droits en écriture sur un fichier pour le supprimer mais il faut avoir les droits en écriture de son `répertoire parent`.
+- le droit en exécution pour un répertoire signifie que l'on a le droit d'en faire le répertoire courant et d'afficher les informations détaillées sur les entrées du répertoire.
+
+Supposons dans l'exemple suivant que l'on dispose d'un autre utilisateur, dont l'identifiant est `bob` et le groupe principal est `terminale` (c'est à dire n'appartenant pas au groupe d'Alice).
+
+```console
+alice@a12p24:~$ chmod o-r home/alice
+alice@a12p24:~$ ls -l -d /home/alice
+drwxr-x--x 1 alice nsi 4096 31 oct 7:55 /home/alice
+```
+Ici l'option `-d` de la commande `ls` permet d'afficher les informations du répertoire `/home/alice` plutôt que de lister son contenu (comme on a pu le voir grâce à la commande `man` précédemment).
+Si `bob`ouvre une session à son tour, il ne peut pas voir le contenu du répertoire personnel d'Alice :
+
+```console
+bob@a12p24:~$ cd home/alice
+bob@a12p24:~$ ls -l 
+ls: impossible d'ouvrir le répertoire '.' : Permission non accordée
+```
+Si Alice remet les droits en lecture et retire les droits en exécution, 
+
+```console
+alice@a12p24:~$ chmod o+r,o-x home/alice
+alice@a12p24:~$ ls -l -d /home/alice
+drwxr-xr-- 1 alice nsi 4096 31 oct 7:55 /home/alice
+```
+
+L'utilisateur `bob`pourra alors lire les entrées, mais pas les informations associées et ne pourra pas pénétrer dans le répertoire.
+
+```console
+bob@a12p24:~$ ls -l home/alice
+ls: impossible d'accéder à '/home/alice/Photos' : Permission non accordée
+ls: impossible d'accéder à '/home/alice/Documents' : Permission non accordée
+total 0
+d????????? ? ? ? ? 				? Documents
+d????????? ? ? ? ?				? Photos
+bob@a12p24:~$ cd /home/alice
+bash: cd: /home/alice/: Permission non accordée
+```
 
 
 
-Contenu d'un répertoire
------------------------
-
-La commande `ls` permet de lister les entrées d'un répertoire ou les
-fichiers dont les noms sont donnés. Différentes options permettent
-d'afficher certaines caractéristiques des fichiers.
-
-Par défaut, la commande liste les entrées du répertoire courant.
-
-Les options suivante sont couramment utilisées :
-
-* `-l` - _long_ - format long, voir ci-dessus
-* `-a` - _all_ - liste aussi les fiches "cachés", c.-à-d. dont le nom
-  commence par `.`
-* `-h`, _human-readable_ - affiche les tailles dans un format plus
-  lisible
-* `-R` - _recursively_ - liste récursivement les répertoires rencontrés
-* `-1` - liste les fichiers à raison d'un par ligne (commode pour
-  exploiter le résultat de la commande) 
-* `-d` - _directory_ - les répertoires listés en paramètre sont
-  affichés plutôt que de lister leur contenu 
-* `-t` - _time_ - trie les fichiers, dernier modifié en tête
-* `-F` - précise le type du fichier par un préfixe (`/`pour les
-  répertoires, `*`pour les exécutables, `@` pour les liens
-  symboliques, etc.)
-
-La commande `tree` permet aussi d'afficher l'arborescence d'un
-répertoire sous la forme d'un arbre.
 
 
-
-
-Pour complèter cette brève introducution, vous trouverez une référence
+Pour complèter ce cours, vous trouverez une référence
 des principales commandes de manipulation du système de fichiers à
 [fr.wikipedia.org/wiki/Commandes_Unix#Fichiers_et_répertoires](https://fr.wikipedia.org/wiki/Commandes_Unix#Fichiers_et_r%C3%A9pertoires). 
 
