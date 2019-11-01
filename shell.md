@@ -168,34 +168,34 @@ de se déplacer dans la hiérarchie du système de fichiers :
 La commande `pwd` affiche le répertoire de travail :
 
 ```console
-~$ pwd
+alice@a12p24:~$ pwd
 /home/alice
 ```
 
 La commande `cd` permet de changer de répertoire de travail :
 
 ```console 
-~$ pwd
+alice@a12p24:~$ pwd
 /home/alice
-~$ cd Documents 
-~/Documents$ pwd
+alice@a12p24:~$ cd Documents 
+alice@a12p24:~/Documents$ pwd
 /home/alice/Documents
 ```
 Elle permet également de revenir directement au répertoire personnel de l'utilisateur lorsqu'on l'utilise sans paramètre :
 
 ```console 
-~/Documents$ cd
-~$ pwd
+alice@a12p24:~/Documents$ cd
+alice@a12p24:~$ pwd
 /home/alice 
 ```
 
 La commande `mkdir` permet de créer un nouveau répertoire :
 
 ```console
-~$ ls
+alice@a12p24:~$ ls
 Documents Photos
-~$ mkdir test
-~$ ls
+alice@a12p24:~$ mkdir test
+alice@a12p24:~$ ls
 Documents Photos test
 ```
 
@@ -203,8 +203,8 @@ La commande `rmdir` permet de supprimer un répertoire, il doit être
 vide :
 
 ```console
-~$ rmdir test
-~$ ls 
+alice@a12p24:~$ rmdir test
+alice@a12p24:~$ ls 
 Documents Photos
 ```
 
@@ -265,10 +265,10 @@ En supposant que le répertoire courant soit `/home/alice/documents`,
 on pourra écrire `../Photos` pour désigner le répertoire `/home/alice/Photos`
 
 ```console
-~$ cd
-~$ cd Documents
-~/Documents$ cd ../Photos
-~/Photos$ pwd
+alice@a12p24:~$ cd
+alice@a12p24:~$ cd Documents
+alice@a12p24:~/Documents$ cd ../Photos
+alice@a12p24:~/Photos$ pwd
 /home/alice/Photos
 ```
 
@@ -281,7 +281,7 @@ Le système Linux est multiutilisateur. Chaque personne utilisant une machine po
 Pour gérer cela, le système d'exploitation associe à chaque fichier l'UID de son propriétaire et le GID de son groupe propriétaire.  Le système permet aussi de définir des _permissions_ pour le propriétaire, le groupe propriétaire et les autres utilisateurs. L'option `-l`de la commande `ls` permet de faire un affichage détaillé des fichiers :
 
 ```console
-~$ ls -l Photos
+alice@a12p24:~$ ls -l Photos
 total 2672
 -rw-r--r-- 1 alice nsi 1431099 oct. 31 7:55 img_001.jpg
 -rw-r--r-- 1 alice nsi 1300458 oct. 31 7:56 img_002.jpg
@@ -304,7 +304,7 @@ dont tous les membres peuvent le lire mais ni le modifier ni l'exécuter (`r--`)
 La commande `chmod` permet de modifier les permissions sur le fichier, avec la syntaxe :
 
 ```console
-~$ chmod c_1m_1p_1,...,c_nm_np_n chemin
+alice@a12p24:~$ chmod c_1m_1p_1,...,c_nm_np_n chemin
 ```
 où 
 - les `c_i` sont des cibles qui peuvent valoir `u` (pour le propriétaire), `g` (pour le groupe), `o` (pour les autres) et `a` pour tous (c'est à dire les trois catégories).
@@ -314,8 +314,8 @@ où
 Par exemple la commande ci-dessous rajoute les droits en écriture à toutes les personnes du groupe et supprime les droits en lecture des autres.
 
 ```console
-~$ chmod g+w,o-r Photos/img_001.jpg
-~$ ls -l Photos
+alice@a12p24:~$ chmod g+w,o-r Photos/img_001.jpg
+alice@a12p24:~$ ls -l Photos
 total 2672
 -rw-rw---- 1 alice nsi 1431099 oct. 31 7:55 img_001.jpg
 -rw-r--r-- 1 alice nsi 1300458 oct. 31 7:56 img_002.jpg
@@ -323,7 +323,7 @@ total 2672
 Pour illustrer les droits en exécution, on peut faire le test suivant :
 
 ```console
-~$ ls -l /bin/ls
+alice@a12p24:~$ ls -l /bin/ls
 -rwxr-xr-x root root 88248 janv. 14 2019 /bin/mkdir
 ```
 
