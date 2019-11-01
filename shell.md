@@ -393,7 +393,7 @@ Ainsi, si existe les fichiers `test`, `time`, `touch`, `trace`,
 * le motif `t*` sera remplacé par l'ensemble des noms de fichiers,
 * le motif `*s*` par `test`, et `tsort`,
 * le motif `tr???` par les seuls `trace` et `troff`
-* le motif `*z*` par rien (et el shell avertira d'une erreur) 
+* le motif `*z*` par rien (et le shell avertira d'une erreur) 
 
 D'autres méta-caractères sont définis :
 
@@ -401,8 +401,15 @@ D'autres méta-caractères sont définis :
 * `[^liste]` correspond à n'importe quel des caractères sauf ceux de _liste_
 * `[lower-upper]` correspond à tout caractère compris entre _lower_ et _upper_
 
+Par exemple : 
 
+```console
+alice@a12p24:~$ ls /home/alice/*/img?*[23].jpg
+/home/alice/Photos/img_002.jpg
+alice@a12p24:~$ ls /home/alice/Photos/photos*
+ls: impossible d'accéder à '/home/alice/Photos/photos*' : Aucun fichier ou dossier de ce type
 
+```
 
 Pour complèter ce cours, vous trouverez une référence
 des principales commandes de manipulation du système de fichiers à
@@ -413,4 +420,5 @@ Voyez également la carte de référence Unix de Moïse Valvassori
 * [unix-refcard.pdf sur www.ai.univ-paris8.fr](http://www.ai.univ-paris8.fr/~djedi/poo/unix-refcard.pdf)
 
 
+# EXERCICES
 
