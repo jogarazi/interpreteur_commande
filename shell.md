@@ -178,27 +178,34 @@ La commande `cd` permet de changer de répertoire de travail :
 ~$ pwd
 /home/alice
 ~$ cd Documents 
-~$ pwd
+~/Documents$ pwd
 /home/alice/Documents
+```
+Elle permet également de revenir directement au répertoire personnel de l'utilisateur lorsqu'on l'utilise sans paramètre :
+
+```console 
+~/Documents$ cd
+~$ pwd
+/home/alice 
 ```
 
 La commande `mkdir` permet de créer un nouveau répertoire :
 
 ```console
- ls
-doc  tmp
-% mkdir foo
-% ls
-doc  foo  tmp
+~$ ls
+Documents Photos
+~$ mkdir test
+~$ ls
+Documents Photos test
 ```
 
 La commande `rmdir` permet de supprimer un répertoire, il doit être
 vide :
 
 ```console
-% rmdir foo
-% ls 
-doc  tmp
+~$ rmdir test
+~$ ls 
+Documents Photos
 ```
 
 
@@ -206,7 +213,7 @@ doc  tmp
 
 Chemin d'accès à un fichier
 ---------------------------
-
+Les chaines de caractères affichées par les commandes ci-dessus sont des _chemins_.
 Le **chemin d'accès à un fichier** permet de désigner un fichier au
 sein de la hiérarchie. Il s'agit 
 
@@ -217,13 +224,13 @@ sein de la hiérarchie. Il s'agit
 Des exemples sont :
 
 ```
-/usr/local/bin/jupyter-notebook
+/home/alice/Photos/img_002.jpg
 ```
 
 ou
 
 ```
-pj/diu-eil-lil/bloc3/seance0/shell.md
+Photos/img_002.jpg
 ```
 
 On distingue donc les
@@ -235,14 +242,14 @@ On distingue donc les
 * chemins _relatifs_
   - donnent le chemin depuis le répertoire de travail
 
-L'interpréteur de commande permet de désigner le répertoire personnel
+Comme on peut le voir dans les test précédents, l'interpréteur de commande permet de désigner le répertoire personnel
 à l'aide du caractère `~`. On écrit par exemple 
 
 ```
-~/tmp/convert.py
+~/Documents/diapos.pdf
 ```
 
-pour désigner le fichier `convert.py` de mon répertoire `tmp`.
+pour désigner le fichier `diapos.pdf` du répertoire `Documents`.
 
 
 Entrées `.`et `..`
@@ -254,55 +261,49 @@ correspondent respectivement
 * au répertoire lui même, 
 * au répertoire parent.
 
-En supposant
-
-* que le répertoire courant soit `/home/diueil/duchmol/tmp`,
-* qu'il existe un répertoire ``/home/diueil/duchmol/doc`,
-
-on pourra écrire `../doc` pour désigner ce répertoire.
-
-
-
-Manipulation des répertoires
-----------------------------
-
-La commande `pwd` affiche le répertoire de travail :
+En supposant que le répertoire courant soit `/home/alice/documents`,
+on pourra écrire `../Photos` pour désigner le répertoire `/home/alice/Photos`
 
 ```console
-% pwd
-/home/diueil/duchmol/tmp
+~$ cd
+~$ cd Documents
+~/Documents$ cd ../Photos
+~/Photos$ pwd
+/home/alice/Photos
 ```
 
-La commande `cd` permet de changer de répertoire de travail :
 
-```console 
-% pwd
-/home/diueil/duchmol
-% cd tmp 
-% pwd
-/home/diueil/duchmol/tmp
-% cd ../doc
-% pwd
-/home.diueil/duchmol/doc
-```
 
-La commande `mkdir` permet de créer un nouveau répertoire :
+Permission et propriété des fichiers
+------------------------------------
+
+Le système Linux est multiutilisateur. Chaque personne utilisant une machine possède un _compte utilisateur_ sur le système et peut partager des fichiers avec d'autres utilisateurs de la machine. Comme nous l'avons vu ci-dessus, le système Linux propose en effet la notion de _groupe d'utilisateurs_. Un utilisateur doit obligatoirement être membre d'un groupe au moins.
+Pour gérer cela, le système d'exploitation associe à chaque fichier l'UID de son propriétaire et le GID de son groupe propriétaire.  Le système permet aussi de définir des _permissions_ pour le propriétaire, le groupe propriétaire et les autres utilisateurs. L'option `-l`de la commande `ls` permet de faire un affichage détaillé des fichiers :
 
 ```console
-% ls
-doc  tmp
-% mkdir foo
-% ls
-doc  foo  tmp
+~$ ls -l Photos
+total 2672
+-rw-r--r-- 1 alice nsi 1431099 oct. 31 7:55 img_001.jpg
+-rw-r--r-- 1 alice nsi 1300458 oct. 31 7:56 img_002.jpg
 ```
+Le resultat de la comande ci-dessus indique en premier lieu que la taille occupée par 
+les fichiers fait 2672 blocs de 1024 octets.
+Ensuite, pourchaque fichier , sont donnés les _permissions_, un nombre (correspondant au nombre de "liens durs" vers le fichier. Nous n'en parlerons pas dans ce cours), le nom du propriétaire, le nom du groupe propriétaire, la taille en octet, la date et l'heure de la dernière modification du fichier et enfin le nom du fichier.
 
-La commande `rmdir` permet de supprimer un répertoire, il doit être
-vide :
+### Lecture des permissions :
+- le premier caractère sera `d` si la ligne concerne un répertoire et `-`sinon
+- les neufs caractères suivants sont à lire par groupe de 3. Dans chaque groupe le premier caractère représente les droits en lecture (`r`pour _read_), le second les droits en écriture (`w` pour _write_) et le troisième ceux en exécution (`x`pour execute). Si une lettre est affichée la permission est accordée. Si un `-`est affiché, la permission est refusée.
+- le premier groupe de trois caractères représente les permissions pour le propriétaire, le second pour le groupe propriétaire et le troisième pour tous les autres.
+
+Dans l'exemple ci-dessus, `img.001.jpg` est un fichier (premier caractère `-`) appartenant à `alice` qui peut le lire, le modifier mais pas l'exécuter (`rw-`, l'exécution dans le cas d'un fichier image n'aurait aucun sens). Le fichier appartient également au groupe `nsi`
+dont tous les membres peuvent le lire mais ni le modifier ni l'exécuter (`r--`). Enfin tous les autres utilisateurs peuvent lire le fichier mais ni le modifier ni l'exécuter (`r--`).
+
+
+### Modifications des permissions
+La commande `chmod` permet de modifier les permissions sur le fichier, avec la syntaxe :
 
 ```console
-% rmdir foo
-% ls 
-doc  tmp
+~$ chmod $c_1m_1$
 ```
 
 Caractéristiques d'un fichier
@@ -311,16 +312,15 @@ Caractéristiques d'un fichier
 Un fichier est caractérisé par :
 
 * un propriétaire : un des utilisateurs du système,
-  par exemple `duchmol`
+  par exemple `alice`
 * un groupe propriétaire, un des groupes du système, 
-  par exemple `diueil`
+  par exemple `nsi`
 * des dates (de création, de dernière modification, etc.)
 * des droits d'accès
   - en lecture, écriture, exécution
   - pour le propriétaire, pour les membres du groupe propriétaire,
     pour les autres 
 * un type : fichier, répertoire, lien, etc
-* un numéro d'inœud (à suivre)
 * etc.
 
 La commande `ls` permet d'afficher certaines des caractéristiques :
@@ -331,7 +331,7 @@ La commande `ls` permet d'afficher certaines des caractéristiques :
 ```
 On y lit (en gras les principaux champs)
 
-* premier champ **type** du fichuer et **droits** (voir ci-dessous)
+* premier champ **type** du fichier et **droits** (voir ci-dessous)
 * deuxième champ, un entier, le nombre de liens (physiques) vers le fichier
 * troisième champ **propriétaire**, le nom du propriétaire du fichier 
 * quatrième champ, le nom du groupe propriétaire du fichier 
@@ -342,9 +342,6 @@ On y lit (en gras les principaux champs)
   quantième, heure ou année)
 * dernier champ **nom du fichier**
 
-Type de fichier **todo** à compléter
-
-Droits **todo** à compléter
 
 
 Contenu d'un répertoire
@@ -377,10 +374,9 @@ La commande `tree` permet aussi d'afficher l'arborescence d'un
 répertoire sous la forme d'un arbre.
 
 
-**todo** ... liens symbolique / physique ...
 
 
-Pour complèter cette brève introdcution, vous trouverez une référence
+Pour complèter cette brève introducution, vous trouverez une référence
 des principales commandes de manipulation du système de fichiers à
 [fr.wikipedia.org/wiki/Commandes_Unix#Fichiers_et_répertoires](https://fr.wikipedia.org/wiki/Commandes_Unix#Fichiers_et_r%C3%A9pertoires). 
 
