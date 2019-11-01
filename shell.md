@@ -381,6 +381,6 @@ des principales commandes de manipulation du système de fichiers à
 Voyez également la carte de référence Unix de Moïse Valvassori 
 
 * [unix-refcard.pdf sur www.ai.univ-paris8.fr](http://www.ai.univ-paris8.fr/~djedi/poo/unix-refcard.pdf)
-* [copie locale](doc/unix-refcard.pdf)
+
 
 
